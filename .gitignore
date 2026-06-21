@@ -1,0 +1,48 @@
+# ============================================================
+# WhatBreath .gitignore
+# ============================================================
+
+# ---- 비밀키 / 환경변수 ----
+.env
+.env.local
+*.env
+
+# ---- 대용량 모델 가중치 ----
+# (용량이 커서 Git에 직접 올리지 않음. README에 다운로드 링크 안내)
+*.pth
+*.pt
+*.ckpt
+
+# ---- 데이터 압축/대용량 파일 ----
+data/*.zip
+data/processed/
+data/A/
+*.npy
+
+# ---- Python ----
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+.venv/
+.venv310/
+venv/
+env/
+ENV/
+
+# ---- Jupyter / Colab ----
+.ipynb_checkpoints/
+
+# ---- OS / 에디터 ----
+.DS_Store
+Thumbs.db
+.vscode/
+*.swp
+
+# ---- 로그 / 임시파일 ----
+*.log
+temp/
+tmp/
+*.tmp
