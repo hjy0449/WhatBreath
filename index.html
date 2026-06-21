@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>WhatBreath — 스마트폰 호흡음 분석</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ============ NAVBAR ============ -->
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="logo" data-nav="home">
+        <div class="logo-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M12 3v7" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M12 10c-1.2-1.6-3-2-4.4-1.2C5.8 9.7 5 11.6 5 14c0 3 1 6.2 2.6 6.8 1.3.5 2.6-.4 3-1.8.3-1.1.4-3 .4-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 10c1.2-1.6 3-2 4.4-1.2C18.2 9.7 19 11.6 19 14c0 3-1 6.2-2.6 6.8-1.3.5-2.6-.4-3-1.8-.3-1.1-.4-3-.4-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M9 8.2c-.8-1-.8-2.4 0-3.4M15 8.2c.8-1 .8-2.4 0-3.4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span>WhatBreath</span>
+      </div>
+      <div class="tabs">
+        <button class="tab active" data-nav="home">소개</button>
+        <button class="tab" data-nav="record">녹음·분석</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ HOME PAGE ============ -->
+  <div id="page-home" class="page">
+
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <div class="badge"><span class="dot"></span>청진기 없이, 스마트폰만으로</div>
+          <h1 class="h1">숨소리 하나로,<br/>폐 건강을 <span class="accent">먼저</span> 확인하세요</h1>
+          <p class="lead">
+            병원용 청진 데이터로 학습한 AI가 스마트폰 녹음을 분석해 호흡음의 이상 징후를 찾아드려요.
+            의학적 진단을 대신하진 않지만, 병원에 가기 전 참고할 첫 신호가 되어줄 거예요.
+          </p>
+          <div class="btn-row">
+            <button class="btn btn-primary btn-lg" data-nav="record">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="9" y="2" width="6" height="12" rx="3" stroke="#fff" stroke-width="1.8"/><path d="M5 11a7 7 0 0 0 14 0" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M12 18v4M9 22h6" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>
+              지금 녹음 시작하기
+            </button>
+          </div>
+          <div class="stats-row">
+            <div class="stat"><div class="stat-n">3,901</div><div class="stat-l">학습 샘플</div></div>
+            <div class="stat"><div class="stat-n">2-클래스</div><div class="stat-l">정상 · 이상</div></div>
+            <div class="stat"><div class="stat-n">EfficientNet-B0</div><div class="stat-l">분석 모델</div></div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-glow"></div>
+          <div class="hero-visual-inner">
+            <div class="mono-label">waveform → mel-spectrogram</div>
+            <div class="hero-mel-box">
+              <canvas id="heroMelCanvas"></canvas>
+            </div>
+            <div class="hero-visual-foot">
+              <div>
+                <div class="foot-label">현재 표시</div>
+                <div class="foot-value" id="heroMelLabel">원본 음향 신호</div>
+              </div>
+              <div class="foot-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M2 12h4l2-7 4 14 3-10 2 3h5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="eyebrow">HOW IT WORKS</div>
+      <h2 class="h2">세 단계로 끝나는 분석</h2>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="9" y="2" width="6" height="12" rx="3" stroke="#1E5FCC" stroke-width="1.8"/><path d="M5 11a7 7 0 0 0 14 0" stroke="#1E5FCC" stroke-width="1.8" stroke-linecap="round"/><path d="M12 18v4M9 22h6" stroke="#1E5FCC" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <h3 class="step-title">스마트폰으로 녹음</h3>
+          <p class="step-desc">청진기 없이, 스마트폰 마이크로 흉부에서 5초간 호흡음을 녹음해요.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M2 12h4l2-7 4 14 3-10 2 3h5" stroke="#1E5FCC" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3 class="step-title">AI가 신호를 변환·분석</h3>
+          <p class="step-desc">스마트폰 마이크 특성에 맞춰 보정한 뒤, 학습된 모델이 호흡 패턴을 분석해요.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#1E5FCC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3 class="step-title">결과를 바로 확인</h3>
+          <p class="step-desc">정상/이상 여부와 확률을 시각화해서 바로 확인할 수 있어요.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-cta-wrap">
+      <div class="cta-banner">
+        <div class="cta-text">
+          <h3 class="cta-title">의료 진단을 대체하지 않아요</h3>
+          <p class="cta-desc">이 분석은 참고용 스크리닝 도구예요. 이상 징후가 감지되면 반드시 호흡기내과 등 의료 전문가의 진료를 받아주세요.</p>
+        </div>
+        <button class="btn btn-secondary" data-nav="record">
+          바로 시작하기
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#1E5FCC" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ============ RECORD / ANALYZE PAGE ============ -->
+  <div id="page-record" class="page" style="display:none;">
+    <div class="narrow-wrap">
+
+      <div class="page-head">
+        <div class="eyebrow" id="stepLabel">STEP 1 / 3</div>
+        <h1 class="h1-sm" id="recordTitle">호흡음 녹음 또는 업로드</h1>
+      </div>
+
+      <!-- idle / recording -->
+      <div id="stage-idle" class="card-panel">
+
+        <div id="idle-controls">
+          <div class="mic-guide">
+            <img src="assets/mic-position.jpg" alt="스마트폰 청진 위치 안내" class="mic-guide-img" />
+            <div class="mic-guide-text">
+              <div class="mic-guide-title">이 위치에 스마트폰을 대주세요</div>
+              <p class="mic-guide-desc">등 위쪽, 어깨뼈 아래 빨간 점 부근이에요. 옷 위가 아닌 맨살에 마이크 부분을 밀착해 주세요.</p>
+            </div>
+          </div>
+
+          <div class="wave-box">
+            <canvas id="recordWaveCanvas"></canvas>
+          </div>
+
+          <p class="panel-desc">
+            흉부에 스마트폰을 가볍게 대고, 평소 호흡으로 15초간 녹음해주세요.<br/>
+            5초씩 3개 구간으로 나누어 각각 분석한 뒤 종합 결과를 보여드려요.
+          </p>
+          <div class="btn-row center">
+            <button class="btn btn-primary btn-lg" id="btnStartRecord">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="9" y="2" width="6" height="12" rx="3" stroke="#fff" stroke-width="1.8"/><path d="M5 11a7 7 0 0 0 14 0" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M12 18v4M9 22h6" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>
+              녹음 시작
+            </button>
+            <button class="btn btn-secondary btn-lg" id="btnUploadFile">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 16V4M12 4l-4.5 4.5M12 4l4.5 4.5" stroke="#0A2A5E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke="#0A2A5E" stroke-width="1.8" stroke-linecap="round"/></svg>
+              파일 업로드
+            </button>
+            <input type="file" id="fileInput" accept="audio/*" style="display:none;" />
+          </div>
+        </div>
+
+        <div id="recording-controls" style="display:none;">
+          <div class="timer-display"><span id="timerValue">0.0</span>s <span class="timer-total">/ 15.0s</span></div>
+          <div class="segment-dots" id="segmentDots"></div>
+          <div class="btn-row center">
+            <button class="btn btn-danger" id="btnStopRecord">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="6" y="6" width="12" height="12" rx="2" fill="#fff"/></svg>
+              녹음 중단
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- uploaded, ready to analyze -->
+      <div id="stage-uploaded" class="card-panel" style="display:none;">
+        <div class="file-row">
+          <div class="file-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M2 12h4l2-7 4 14 3-10 2 3h5" stroke="#1E5FCC" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="file-meta">
+            <div class="file-name" id="uploadedFileName">녹음.wav</div>
+            <div class="file-status">준비 완료 · 분석 대기 중</div>
+          </div>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#2FBE85" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="btn-row end">
+          <button class="btn btn-ghost" id="btnReselect">다시 선택</button>
+          <button class="btn btn-primary" id="btnAnalyze">
+            분석 시작하기
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- analyzing -->
+      <div id="stage-analyzing" class="card-panel center-content" style="display:none;">
+        <div class="spinner"></div>
+        <div class="analyzing-title">3개 구간의 호흡음 패턴을 분석하고 있어요</div>
+        <div class="analyzing-desc">도메인 보정 → Mel-Spectrogram 변환 → Groq 추론 (구간별)</div>
+        <div class="segment-progress" id="segmentProgress"></div>
+      </div>
+
+      <!-- result -->
+      <div id="stage-result" style="display:none;">
+        <div id="resultBanner" class="result-banner">
+          <div class="result-head">
+            <div class="result-icon" id="resultIcon"></div>
+            <div>
+              <div class="result-title" id="resultTitle">정상 범위로 분석됐어요</div>
+              <div class="result-sub" id="resultSub">파일명 · 시간</div>
+            </div>
+          </div>
+
+          <div class="result-metrics">
+            <div class="metric-box">
+              <div class="metric-label">정상 확률</div>
+              <div class="metric-value metric-green" id="metricNormal">0%</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-label">이상 확률</div>
+              <div class="metric-value metric-red" id="metricAbnormal">0%</div>
+            </div>
+          </div>
+
+          <div class="result-bar">
+            <div class="result-bar-green" id="resultBarGreen"></div>
+            <div class="result-bar-red" id="resultBarRed"></div>
+          </div>
+
+          <div class="segment-results" id="segmentResults"></div>
+
+          <div class="mel-card">
+            <div class="mel-card-label">Mel-Spectrogram <span id="melSegmentTag"></span></div>
+            <canvas id="resultMelCanvas"></canvas>
+          </div>
+        </div>
+
+        <div id="adviceCard" class="advice-card">
+          <div class="advice-header">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" stroke="#1E5FCC" stroke-width="1.6" stroke-linejoin="round"/></svg>
+            <span>AI 조언</span>
+          </div>
+          <p id="adviceText">조언을 불러오는 중이에요...</p>
+        </div>
+
+        <div class="disclaimer-row">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink:0; margin-top:1px;"><path d="M12 3 1 21h22L12 3z" stroke="#5B7A99" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 9v5M12 17.5v.01" stroke="#5B7A99" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <p id="disclaimerText">이 결과는 의학적 진단이 아닌 참고용 스크리닝이에요.</p>
+        </div>
+
+        <div class="btn-row center">
+          <button class="btn btn-secondary btn-lg" id="btnReanalyze">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="9" y="2" width="6" height="12" rx="3" stroke="#0A2A5E" stroke-width="1.8"/><path d="M5 11a7 7 0 0 0 14 0" stroke="#0A2A5E" stroke-width="1.8" stroke-linecap="round"/><path d="M12 18v4M9 22h6" stroke="#0A2A5E" stroke-width="1.8" stroke-linecap="round"/></svg>
+            다시 분석하기
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
