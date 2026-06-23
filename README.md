@@ -213,11 +213,9 @@ python app.py
 
 ### 4.5 웹사이트 접속
 
-브라우저에서 **http://127.0.0.1:5000/** 으로 접속하세요.
-(Flask가 index.html / style.css / script.js를 직접 서빙하므로 별도 웹서버가 필요 없어요.)
+file:///C:/Users/JY%20Han/Downloads/WhatBreath%20%E2%80%94%20%EC%8A%A4%EB%A7%88%ED%8A%B8%ED%8F%B0%20%ED%8F%90%EC%9D%8C%20%EB%B6%84%EC%84%9D%20(2).html
 
-> 마이크 녹음 기능은 localhost(127.0.0.1)에서만 정상 동작해요. file://로 직접 열거나
-> 192.168.x.x 같은 일반 IP로 접속하면 브라우저가 보안상 마이크 권한을 차단해요.
+이 사이트로 들어가면 됩니다.
 
 ---
 
